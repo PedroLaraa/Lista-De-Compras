@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -14,10 +15,11 @@ import { ConfigModule } from '@nestjs/config';
       password: process.env.POSTGRES_PASSWORD,
       port: Number(process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
-      entities: [],
       synchronize: true,
       ssl: true,
+      entities: [`${__dirname}/**/*.entity{.js,.ts}`],
     }),
+    UserModule,
   ],
   controllers: [],
   providers: [],
