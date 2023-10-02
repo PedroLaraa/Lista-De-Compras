@@ -1,5 +1,6 @@
+import { ProductEntity } from 'src/product/entities/product.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'cart' })
 export class CartEntity {
@@ -15,6 +16,9 @@ export class CartEntity {
   @Column({ name: 'user_owner', nullable: false })
   user_owner: UserEntity;
 
-  @Column({ name: 'products', nullable: true })
+  //@Column({ name: 'products', nullable: true })
+  //products?: ProductEntity[];
+
+  @OneToMany(() => ProductEntity, (product: ProductEntity) => product.name)
   products?: ProductEntity[];
 }
