@@ -1,10 +1,19 @@
 import { ProductEntity } from 'src/product/entities/product.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'cart' })
 export class CartEntity {
-  @PrimaryGeneratedColumn('rowid')
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ name: 'name', nullable: false })
@@ -13,12 +22,17 @@ export class CartEntity {
   @Column({ name: 'date', nullable: false })
   date: string;
 
-  @Column({ name: 'user_owner', nullable: false })
+  @OneToOne(() => UserEntity)
+  @JoinColumn()
   user_owner: UserEntity;
 
-  //@Column({ name: 'products', nullable: true })
-  //products?: ProductEntity[];
-
-  @OneToMany(() => ProductEntity, (product: ProductEntity) => product.name)
+  @OneToMany(() => ProductEntity, (product) => product.name)
+  @JoinColumn()
   products?: ProductEntity[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date;
 }
