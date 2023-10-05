@@ -12,8 +12,12 @@ export class CartService {
   ) {}
 
   async createCart(createCarDto: CreateCartDto): Promise<CartEntity> {
-    return this.cartRepository.save({
+    return await this.cartRepository.save({
       ...createCarDto,
     });
+  }
+
+  async listCart(): Promise<CartEntity[]> {
+    return await this.cartRepository.find();
   }
 }

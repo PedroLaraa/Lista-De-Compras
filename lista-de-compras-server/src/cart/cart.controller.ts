@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dtos/createCart.dto';
 import { CartEntity } from './entities/cart.entity';
@@ -9,5 +9,10 @@ export class CartController {
   @Post()
   async createCart(@Body() createCart: CreateCartDto): Promise<CartEntity> {
     return this.cartService.createCart(createCart);
+  }
+
+  @Get()
+  async getAllCart() {
+    return this.cartService.listCart();
   }
 }
