@@ -26,13 +26,13 @@ export class ProductEntity {
   @Column({ name: 'check', nullable: true })
   checked?: boolean | null;
 
+  @OneToOne(() => CartEntity)
+  @JoinColumn()
+  cart: CartEntity;
+
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updated_at: Date;
-
-  @OneToOne(() => CartEntity)
-  @JoinColumn()
-  cart: CartEntity;
 }
