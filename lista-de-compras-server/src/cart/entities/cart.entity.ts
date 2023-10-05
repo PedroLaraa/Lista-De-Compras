@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -25,9 +26,12 @@ export class CartEntity {
   @JoinColumn()
   user_owner: UserEntity;
 
-  @OneToOne(() => ProductEntity)
+  @OneToMany(() => ProductEntity, (product) => product.name)
   @JoinColumn()
   product?: ProductEntity[];
+
+  @OneToMany(() => UserEntity, (user) => user.id)
+  user: UserEntity;
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;
