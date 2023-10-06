@@ -12,7 +12,7 @@ import {
 @Entity({ name: 'user' })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ name: 'name', nullable: false })
   name: string;

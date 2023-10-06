@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { CartModule } from './cart/cart.module';
 import { ProductModule } from './product/product.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,13 +18,14 @@ import { ProductModule } from './product/product.module';
       password: process.env.POSTGRES_PASSWORD,
       port: Number(process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
-      synchronize: true,
+      // synchronize: true,
       ssl: true,
       entities: [`${__dirname}/**/*.entity{.js,.ts}`],
     }),
     UserModule,
     CartModule,
     ProductModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
