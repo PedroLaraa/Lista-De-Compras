@@ -22,7 +22,7 @@ export class CartEntity {
   @Column({ name: 'date', nullable: false })
   date: string;
 
-  @OneToOne(() => UserEntity)
+  @OneToOne(() => UserEntity, (user) => user.id)
   @JoinColumn()
   user_owner: UserEntity;
 
