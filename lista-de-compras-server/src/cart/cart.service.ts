@@ -15,12 +15,13 @@ export class CartService {
 
   async createCart(
     createCarDto: CreateCartDto,
-    user_owner: string,
+    userId: string,
   ): Promise<CartEntity> {
-    await this.userService.findUserById(user_owner);
+    await this.userService.findUserById(userId);
 
     return await this.cartRepository.save({
       ...createCarDto,
+      userId,
     });
   }
 

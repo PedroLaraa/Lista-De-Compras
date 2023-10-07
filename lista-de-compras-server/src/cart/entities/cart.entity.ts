@@ -5,8 +5,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -22,9 +22,12 @@ export class CartEntity {
   @Column({ name: 'date', nullable: false })
   date: string;
 
-  @OneToOne(() => UserEntity, (user) => user.id)
-  @JoinColumn()
-  user_owner: UserEntity;
+  @Column({ name: 'user_id', nullable: false })
+  userId: string;
+
+  @ManyToOne(() => UserEntity, (user) => user.cart)
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  user_owner?: UserEntity;
 
   @OneToMany(() => ProductEntity, (product) => product.name)
   @JoinColumn()
