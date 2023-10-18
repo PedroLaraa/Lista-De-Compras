@@ -1,15 +1,18 @@
+import { CartEntity } from 'src/cart/entities/cart.entity';
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity({ name: 'user' })
 export class UserEntity {
-  @PrimaryGeneratedColumn('rowid')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ name: 'name', nullable: false })
   name: string;
@@ -22,6 +25,10 @@ export class UserEntity {
 
   @Column({ name: 'password', nullable: false })
   password: string;
+
+  @ManyToOne(() => CartEntity, (cart) => cart.id)
+  @JoinColumn({ name: 'cartId', referencedColumnName: 'id' })
+  cart?: CartEntity[];
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;
