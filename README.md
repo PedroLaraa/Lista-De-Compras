@@ -13,10 +13,10 @@
 | Método HTTP	| Endpoint | Params | Descrição |
 |--------|----------|----------|----------|
 | GET |	/user |  |	Retorna todos os usuários cadastrados |
-| GET |	/user/:id |  |	Retorna o usuário junto com todos seus carrinhos relacionadas pelo ID|
-| POST |	/user |  |	Cadastra um novo usuário |
-| PUT |	/user/:id |  |	Atualiza as informações de um usuário existente |
-| DELETE |	/user/:id |  |	Exclui um usuário existente pelo ID |
+| GET |	/user/:id | Header: {Authorization: JWT Token } |	Retorna o usuário junto com todos seus carrinhos relacionadas pelo ID|
+| POST |	/user | JSON: {name:string; email:string; password:string; username:string;} |	Cadastra um novo usuário |
+| PUT |	/user/:id | Header: {Authorization: JWT Token } |	Atualiza as informações de um usuário existente |
+| DELETE |	/user/:id | Header: {Authorization: JWT Token } |	Exclui um usuário existente pelo ID |
 #
 
 ## Funções Carrinho
@@ -33,10 +33,10 @@
 | Método HTTP	| Endpoint | Params | Descrição |
 |--------|----------|----------|----------|
 | GET |	/cart |  |	Retorna todos os carrinhos cadastradas |
-| GET |	/cart/:id |  |	Retorna um carrinho específico pelo ID |
-| POST |	/cart |  |	Cadastra um novo carrinho |
-| PUT |	/cart/:id |  |	Atualiza as informações de um carrinho existente |
-| DELETE |	/cart/:id |  |	Exclui um carrinho existente pelo ID |
+| GET |	/cart/:id | Header: {Authorization: JWT Token } |	Retorna um carrinho específico pelo ID |
+| POST |	/cart | Header: {Authorization: JWT Token } - JSON: { name: string; date: string; } |	Cadastra um novo carrinho |
+| PUT |	/cart/:id | Header: {Authorization: JWT Token } |	Atualiza as informações de um carrinho existente |
+| DELETE |	/cart/:id | Header: {Authorization: JWT Token } |	Exclui um carrinho existente pelo ID |
 #
 
 ## Funções Produto
@@ -52,10 +52,10 @@
 | Método HTTP	| Endpoint | Params | Descrição |
 |--------|----------|----------|----------|
 | GET |	/product |  |	Retorna todos os produtos cadastradas |
-| GET |	/product/:id |  |	Retorna um produto específico pelo ID |
-| POST |	/product |  |	Cadastra um novo produto |
-| PUT |	/product/:id |  |	Atualiza as informações de um produto existente |
-| DELETE |	/product/:id |  |	Exclui um produto existente pelo ID |
+| GET |	/product/:id | Header: {Authorization: JWT Token } |	Retorna um produto específico pelo ID |
+| POST |	/product | Header: {Authorization: JWT Token } - JSON: { name:string; amount:number; price:number; } |	Cadastra um novo produto |
+| PUT |	/product/:id | Header: {Authorization: JWT Token } |	Atualiza as informações de um produto existente |
+| DELETE |	/product/:id | Header: {Authorization: JWT Token } |	Exclui um produto existente pelo ID |
 #
 
 ## Funções Autenticação
@@ -65,5 +65,5 @@
 
 | Método HTTP	| Endpoint | Params | Descrição |
 |--------|----------|----------|----------|
-| POST |	/auth |  |	Faz login e retorna um JWT |
+| POST |	/auth | JSON: { email: string; password: string; } |	Faz login e retorna um JWT |
 #
