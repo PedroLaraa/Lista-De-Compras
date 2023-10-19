@@ -13,10 +13,11 @@ export class ProductService {
 
   async createProduct(
     createProductDto: CreateProductDto,
+    cartId,
   ): Promise<ProductEntity> {
     return await this.productRepository.save({
       ...createProductDto,
-      cartId: '2a40072d-fef8-4fa6-8af2-88032b53a33b',
+      cartId,
     });
   }
 }
