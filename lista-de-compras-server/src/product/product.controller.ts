@@ -7,12 +7,11 @@ import { ProductEntity } from './entities/product.entity';
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
-  @Post()
+  @Post(':cartId')
   async createProduct(
     @Body() createProduct: CreateProductDto,
     @UserId() userId: string,
-    cartId: string,
   ): Promise<ProductEntity> {
-    return this.productService.createProduct(createProduct, userId, cartId);
+    return this.productService.createProduct(createProduct, userId);
   }
 }
