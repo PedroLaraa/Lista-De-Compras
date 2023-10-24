@@ -25,7 +25,13 @@ export class CartService {
     });
   }
 
-  async listCart(): Promise<CartEntity[]> {
-    return await this.cartRepository.find();
+  async listCart(userId: string): Promise<CartEntity[]> {
+    await this.userService.findUserById(userId);
+
+    return await this.cartRepository.find({
+      where: {
+        userId,
+      },
+    });
   }
 }

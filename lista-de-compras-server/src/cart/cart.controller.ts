@@ -19,7 +19,7 @@ export class CartController {
   }
 
   @Get()
-  async getAllCart() {
-    return this.cartService.listCart();
+  async getAllCart(@UserId() userId: string): Promise<CartEntity[]> {
+    return this.cartService.listCart(userId);
   }
 }
