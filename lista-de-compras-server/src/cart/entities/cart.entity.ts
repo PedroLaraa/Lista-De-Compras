@@ -29,8 +29,7 @@ export class CartEntity {
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user_owner?: UserEntity;
 
-  @OneToMany(() => ProductEntity, (product) => product.name)
-  @JoinColumn()
+  @OneToMany(() => ProductEntity, (product) => product.cart)
   product?: ProductEntity[];
 
   @OneToMany(() => UserEntity, (user) => user.id)

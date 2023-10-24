@@ -16,11 +16,13 @@ export class ProductService {
   async createProduct(
     createProductDto: CreateProductDto,
     userId: string,
+    cartId: string,
   ): Promise<ProductEntity> {
     await this.userService.findUserById(userId);
-    console.log(createProductDto.cartId);
+
     return await this.productRepository.save({
       ...createProductDto,
+      cartId,
     });
   }
 }
