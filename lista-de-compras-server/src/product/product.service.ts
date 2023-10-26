@@ -15,8 +15,8 @@ export class ProductService {
 
   async createProduct(
     createProductDto: CreateProductDto,
-    userId: string,
-    cartId: string,
+    userId,
+    cartId,
   ): Promise<ProductEntity> {
     await this.userService.findUserById(userId);
 
