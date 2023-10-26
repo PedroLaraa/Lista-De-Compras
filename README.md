@@ -1,4 +1,7 @@
 # Api-Lista-De-Compras
+
+# Sobre:
+- É um projeto BackEnd que desenvolvi para a faculdade de ciência da computação, uma simulação de uma lista de compras simples para uso no dia a dia, se quiser anotar suas compras e não se esquecer de nada, sua solução está aqui! Conta com autenticação JWT Token, utilizei o padrão MVC e as boas práticas do SOLID. Utilizei o framework NestJs juntamente do TypeORM para manipular o banco de dados, conta com requisições assíncronas para mais segurança e velocidade. 
  
 ## Funções Usuários
 
