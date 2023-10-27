@@ -19,7 +19,7 @@ export class CartEntity {
   @Column({ name: 'name', nullable: false })
   name: string;
 
-  @Column({ name: 'date', nullable: false })
+  @Column({ name: 'date', nullable: true })
   date: string;
 
   @Column({ name: 'user_id', nullable: false })
