@@ -32,7 +32,7 @@
 
 | Método HTTP	| Endpoint | Params | Descrição |
 |--------|----------|----------|----------|
-| GET |	/cart |  |	Retorna todos os carrinhos cadastradas |
+| GET |	/cart | Header: {Authorization: JWT Token } |	Retorna todos os carrinhos de um User |
 | GET |	/cart/:id | Header: {Authorization: JWT Token } |	Retorna um carrinho específico pelo ID |
 | POST |	/cart | Header: {Authorization: JWT Token } - JSON: { name: string; date: string; } |	Cadastra um novo carrinho |
 | PUT |	/cart/:id | Header: {Authorization: JWT Token } |	Atualiza as informações de um carrinho existente |
