@@ -25,7 +25,6 @@ export class ProductEntity {
   @Column({ name: 'check', nullable: true })
   checked?: boolean | null;
 
-  // FIXME RELAÇÃO NÃO PERMITE A INSERÇÃO DE DADOS NA FOREIGNKEY
   @ManyToOne(() => CartEntity, (cart) => cart.product)
   cart: CartEntity;
 

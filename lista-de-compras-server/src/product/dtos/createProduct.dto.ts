@@ -9,7 +9,4 @@ export class CreateProductDto {
 
   @IsNumber()
   price: number;
-
-  @IsString()
-  cartId: string;
 }

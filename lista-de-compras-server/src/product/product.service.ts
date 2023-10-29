@@ -21,27 +21,15 @@ export class ProductService {
   async createProduct(
     createProductDto: CreateProductDto,
     userId: string,
-    cartId: string,
+    cart: CartEntity, // Adicione o carrinho como um parâmetro
   ): Promise<ProductEntity> {
     await this.userService.findUserById(userId);
 
-    const product = new ProductEntity();
-
-    product.amount = createProductDto.amount;
-    product.name = createProductDto.name;
-    product.price = createProductDto.price;
-
-    const carrinho = await this.cartService.listCartById(cartId, userId);
-
-    carrinho.product.push(product);
-
-    return await this.productRepository.save({
+    const newProduct = this.productRepository.create({
       ...createProductDto,
-      cartId,
+      cart, // Associe o carrinho ao novo produto
     });
 
-    await this.cartRepository.save({
-      ...carrinho,
-    });
+    return await this.productRepository.save(newProduct);
   }
 }
