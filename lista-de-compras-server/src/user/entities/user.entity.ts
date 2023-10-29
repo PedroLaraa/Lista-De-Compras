@@ -29,7 +29,7 @@ export class UserEntity {
   @Column({ name: 'typeUser', nullable: true })
   typeUser: number;
 
-  @ManyToOne(() => CartEntity, (cart) => cart.id)
+  @ManyToOne(() => CartEntity, (cart) => cart.user)
   @JoinColumn({ name: 'cartId', referencedColumnName: 'id' })
   cart?: CartEntity[];
 
