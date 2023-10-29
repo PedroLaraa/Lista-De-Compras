@@ -7,8 +7,6 @@
 
 - [X] Buscar Usuários
 
-- [X] Buscar somente um Usuário
-
 - [X] Cadastrar Usuário
 
 - [X] Atualiza os dados de um Usuário
@@ -16,10 +14,9 @@
 | Método HTTP	| Endpoint | Params | Descrição |
 |--------|----------|----------|----------|
 | GET |	/user |  |	Retorna todos os usuários cadastrados |
-| GET |	/user/:id | Header: {Authorization: JWT Token } |	Retorna o usuário junto com todos seus carrinhos relacionadas pelo ID|
 | POST |	/user | JSON: {name:string; email:string; password:string; username:string;} |	Cadastra um novo usuário |
-| PUT |	/user/:id | Header: {Authorization: JWT Token } |	Atualiza as informações de um usuário existente |
-| DELETE |	/user/:id | Header: {Authorization: JWT Token } |	Exclui um usuário existente pelo ID |
+| PUT |	/user/update | Header: {Authorization: JWT Token } |	Atualiza as informações de um usuário existente |
+| DELETE |	/user/delete | Header: {Authorization: JWT Token } |	Exclui um usuário existente pelo ID |
 #
 
 ## Funções Carrinho
