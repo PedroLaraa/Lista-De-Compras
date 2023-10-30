@@ -21,15 +21,26 @@ export class ProductService {
   async createProduct(
     createProductDto: CreateProductDto,
     userId: string,
-    cart: CartEntity, // Adicione o carrinho como um parâmetro
+    cart: CartEntity,
   ): Promise<ProductEntity> {
     await this.userService.findUserById(userId);
 
     const newProduct = this.productRepository.create({
       ...createProductDto,
-      cart, // Associe o carrinho ao novo produto
+      cart,
     });
 
     return await this.productRepository.save(newProduct);
+  }
+
+  async delteProduct(userId: string, productId: string) {
+    await this.userService.findUserById(userId);
+
+    try {
+      await this.productRepository.delete(productId);
+      return `Product ${productId} has been deleted`;
+    } catch (error) {
+      return console.error(error);
+    }
   }
 }
