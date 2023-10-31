@@ -26,7 +26,10 @@ export class UserEntity {
   @Column({ name: 'password', nullable: false })
   password: string;
 
-  @ManyToOne(() => CartEntity, (cart) => cart.id)
+  @Column({ name: 'typeUser', nullable: true })
+  typeUser: number;
+
+  @ManyToOne(() => CartEntity, (cart) => cart.user)
   @JoinColumn({ name: 'cartId', referencedColumnName: 'id' })
   cart?: CartEntity[];
 

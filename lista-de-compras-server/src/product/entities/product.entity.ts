@@ -3,8 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -26,8 +25,7 @@ export class ProductEntity {
   @Column({ name: 'check', nullable: true })
   checked?: boolean | null;
 
-  @OneToOne(() => CartEntity)
-  @JoinColumn()
+  @ManyToOne(() => CartEntity, (cart) => cart.product)
   cart: CartEntity;
 
   @CreateDateColumn({ name: 'created_at' })

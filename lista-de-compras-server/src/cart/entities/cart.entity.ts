@@ -19,7 +19,7 @@ export class CartEntity {
   @Column({ name: 'name', nullable: false })
   name: string;
 
-  @Column({ name: 'date', nullable: false })
+  @Column({ name: 'date', nullable: true })
   date: string;
 
   @Column({ name: 'user_id', nullable: false })
@@ -29,8 +29,7 @@ export class CartEntity {
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user_owner?: UserEntity;
 
-  @OneToMany(() => ProductEntity, (product) => product.name)
-  @JoinColumn()
+  @OneToMany(() => ProductEntity, (product) => product.cart)
   product?: ProductEntity[];
 
   @OneToMany(() => UserEntity, (user) => user.id)

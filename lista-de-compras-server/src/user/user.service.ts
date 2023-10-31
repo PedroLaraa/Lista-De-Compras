@@ -8,6 +8,7 @@ import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { hash } from 'bcrypt';
+import { UpdateUserDto } from './dtos/updateUser.dto';
 
 @Injectable()
 export class UserService {
@@ -25,9 +26,7 @@ export class UserService {
       throw new BadGatewayException(`${createUserDto.email} already in use`);
     }
 
-    const saltRounds = 10;
-
-    const passwordHashed = await hash(createUserDto.password, saltRounds);
+    const passwordHashed = await this.hashPassword(createUserDto.password);
 
     return this.userRepository.save({
       ...createUserDto,
@@ -47,10 +46,43 @@ export class UserService {
     });
 
     if (!user) {
-      throw new NotFoundException(`User ID: ${userId} not found.`);
+      throw new NotFoundException(`User ID: ${userId} invalid or not found.`);
     }
 
     return user;
+  }
+
+  async updateUser(
+    userId: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserEntity> {
+    const user = await this.findUserById(userId);
+
+    if (!updateUserDto.password) {
+      return await this.userRepository.save({
+        ...user,
+        ...updateUserDto,
+      });
+    } else {
+      const passwordHashed = await this.hashPassword(updateUserDto.password);
+
+      return await this.userRepository.save({
+        ...user,
+        ...updateUserDto,
+        password: passwordHashed,
+      });
+    }
+  }
+
+  async deleteUser(userId: string) {
+    await this.findUserById(userId);
+
+    try {
+      await this.userRepository.delete(userId);
+      return `User has deleted. `;
+    } catch (error) {
+      return `Error: ${error}`;
+    }
   }
 
   async findUserByEmail(email: string): Promise<UserEntity> {
@@ -65,5 +97,17 @@ export class UserService {
     }
 
     return user;
+  }
+
+  async hashPassword(password: string) {
+    if (password) {
+      const saltRounds = 10;
+
+      const passwordHashed = await hash(password, saltRounds);
+
+      return passwordHashed;
+    } else {
+      return `Give a password param for hash.`;
+    }
   }
 }
