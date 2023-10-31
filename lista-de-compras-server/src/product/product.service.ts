@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
@@ -42,5 +42,37 @@ export class ProductService {
     } catch (error) {
       return console.error(error);
     }
+  }
+
+  async listProductById(userId: string, productId): Promise<ProductEntity> {
+    await this.userService.findUserById(userId);
+
+    return await this.productRepository.findOne({
+      where: {
+        id: productId,
+      },
+      relations: {
+        cart: true,
+      },
+    });
+  }
+
+  async updateProduct(
+    userId: string,
+    productId: string,
+    updateProductDto: CreateProductDto,
+  ): Promise<ProductEntity> {
+    const product = await this.listProductById(userId, productId);
+
+    if (!product) {
+      throw new BadRequestException(
+        `This product id "${productId}" not exists`,
+      );
+    }
+
+    return await this.productRepository.save({
+      ...product,
+      ...updateProductDto,
+    });
   }
 }
