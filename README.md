@@ -51,7 +51,6 @@
 
 | Método HTTP	| Endpoint | Params | Descrição |
 |--------|----------|----------|----------|
-| GET |	/product |  |	Retorna todos os produtos cadastradas |
 | GET |	/product/:id | Header: {Authorization: JWT Token } |	Retorna um produto específico pelo ID |
 | POST |	/product | Header: {Authorization: JWT Token } - JSON: { name:string; amount:number; price:number; } |	Cadastra um novo produto |
 | PUT |	/product/:id | Header: {Authorization: JWT Token } |	Atualiza as informações de um produto existente |
