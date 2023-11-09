@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
@@ -36,6 +40,10 @@ export class ProductService {
   async delteProduct(userId: string, productId: string) {
     await this.userService.findUserById(userId);
 
+    const product = await this.listProductById(userId, productId);
+
+    await this.verifyProductOwner(product.cart.userId, userId);
+
     try {
       await this.productRepository.delete(productId);
       return `Product ${productId} has been deleted`;
@@ -70,9 +78,17 @@ export class ProductService {
       );
     }
 
+    await this.verifyProductOwner(product.cart.userId, userId);
+
     return await this.productRepository.save({
       ...product,
       ...updateProductDto,
     });
+  }
+
+  async verifyProductOwner(productUserId: string, userId: string) {
+    if (productUserId !== userId) {
+      throw new NotFoundException('You are allowed to see only your carts.');
+    }
   }
 }

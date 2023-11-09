@@ -18,7 +18,7 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const user = this.findUserByEmail(createUserDto.email).catch(
+    const user = await this.findUserByEmail(createUserDto.email).catch(
       () => undefined,
     );
 
