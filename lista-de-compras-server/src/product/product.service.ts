@@ -76,10 +76,14 @@ export class ProductService {
 
     await this.verifyProductOwner(product.cart.userId, userId);
 
-    return await this.productRepository.save({
-      ...product,
-      ...updateProductDto,
-    });
+    try {
+      return await this.productRepository.save({
+        ...product,
+        ...updateProductDto,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async verifyProductOwner(productUserId: string, userId: string) {
