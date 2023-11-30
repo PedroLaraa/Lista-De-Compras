@@ -41,7 +41,7 @@ export class CartService {
   async listCartById(cartId: string, userId: string): Promise<CartEntity> {
     await this.userService.findUserById(userId);
 
-    return await this.cartRepository.findOne({
+    const cart = await this.cartRepository.findOne({
       where: {
         id: cartId,
       },
@@ -49,6 +49,10 @@ export class CartService {
         product: true,
       },
     });
+
+    await this.verifyCartOwner(cart.userId, userId);
+
+    return cart;
   }
 
   async updateCart(
@@ -59,6 +63,8 @@ export class CartService {
     await this.userService.findUserById(userId);
 
     const cart = await this.listCartById(cartId, userId);
+
+    await this.verifyCartOwner(cart.userId, userId);
 
     return await this.cartRepository.save({
       ...cart,
@@ -75,6 +81,8 @@ export class CartService {
       throw new NotFoundException(`Cart with ID ${cartId} not found`);
     }
 
+    await this.verifyCartOwner(cart.userId, userId);
+
     for (const product of cart.product) {
       await this.productRepository.delete(product.id);
     }
@@ -82,5 +90,11 @@ export class CartService {
     await this.cartRepository.delete(cartId);
 
     return `Cart are deleted succesful`;
+  }
+
+  async verifyCartOwner(cartUserId: string, userId: string) {
+    if (cartUserId !== userId) {
+      throw new NotFoundException('You are allowed to see only your carts.');
+    }
   }
 }

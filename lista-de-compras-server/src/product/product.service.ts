@@ -1,11 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dtos/createProduct.dto';
 import { UserService } from 'src/user/user.service';
 import { CartEntity } from 'src/cart/entities/cart.entity';
-import { CartService } from 'src/cart/cart.service';
 
 @Injectable()
 export class ProductService {
@@ -13,9 +16,6 @@ export class ProductService {
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
     private readonly userService: UserService,
-    private readonly cartService: CartService,
-    @InjectRepository(CartEntity)
-    private readonly cartRepository: Repository<CartEntity>,
   ) {}
 
   async createProduct(
@@ -35,6 +35,10 @@ export class ProductService {
 
   async delteProduct(userId: string, productId: string) {
     await this.userService.findUserById(userId);
+
+    const product = await this.listProductById(userId, productId);
+
+    await this.verifyProductOwner(product.cart.userId, userId);
 
     try {
       await this.productRepository.delete(productId);
@@ -70,9 +74,21 @@ export class ProductService {
       );
     }
 
-    return await this.productRepository.save({
-      ...product,
-      ...updateProductDto,
-    });
+    await this.verifyProductOwner(product.cart.userId, userId);
+
+    try {
+      return await this.productRepository.save({
+        ...product,
+        ...updateProductDto,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async verifyProductOwner(productUserId: string, userId: string) {
+    if (productUserId !== userId) {
+      throw new NotFoundException('You are allowed to see only your carts.');
+    }
   }
 }
